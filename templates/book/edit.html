@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link href="https://cdn.bootcdn.net/ajax/libs/layui/2.7.6/css/layui.css" rel="stylesheet">
+    <title>修改图书</title>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">图书管理系统后台</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">图书管理</a></li>
+            <li class="layui-nav-item">
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="{% static 'img/avatar.png' %}" class="layui-nav-img">
+                    admin
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="meDetail">基本资料</a></dd>
+                    <dd><a href="#">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/book/index">退出登录</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item">
+                    <a class="" href="/book/home">图书管理</a>
+                </li>
+                <li class="layui-nav-item"><a href="../book/borrow">借阅信息管理</a></li>
+                <li class="layui-nav-item"><a href="../book/add">增加图书</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <div id="app">
+                <div class="content" id="content">
+                    <div>
+                        <form class="form-horizontal" method="post" action="/book/edit/">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ book.id }}" name="id">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">书名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" value="{{book.name}}" name="name" class="form-control" id="inputEmail3" placeholder="图书名">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">类型</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="type" value="{{book.type}}" class="form-control" id="inputPassword3"
+                                           placeholder="图书类型">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">图书作者</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="author" value="{{book.author}}" class="form-control" id="inputPassword4"
+                                           placeholder="图书作者">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">介绍</label>
+                                <div class="col-sm-10">
+                                     <textarea placeholder="介绍" name="jiesao" class="form-control" rows="3">{{book.jiesao}}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">数量</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="count" value="{{book.count}}" id="inputPassword5"
+                                           placeholder="图书数量">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-default">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © libo - 图书管理系统
+        </div>
+    </div>
+</div>
+</body>
+</html>

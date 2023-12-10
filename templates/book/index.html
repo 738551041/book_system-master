@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link href="https://cdn.bootcdn.net/ajax/libs/layui/2.7.6/css/layui.css" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- Layui Js -->
+    <script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+    <script type="text/javascript" src="{% static 'layui/lay/modules/layer.js' %}"></script>
+    <title>图书列表</title>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">图书管理系统后台</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item layui-nav-itemed"><a href="">图书管理</a></li>
+            <li class="layui-nav-item">
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="/book/me">
+                    <img src="{% static 'img/avatar.png' %}" class="layui-nav-img">
+                    admin
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="meDetail">基本资料</a></dd>
+                    <dd><a href="#">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/book/index">退出登录</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item">
+                    <a class="" href="/book/home">图书管理</a>
+                </li>
+                <li class="layui-nav-item"><a href="../book/borrow">借阅信息管理</a></li>
+                <li class="layui-nav-item"><a href="../book/add">增加图书</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <div id="app">
+                <div class="content" id="content">
+                    <div >
+                        <form class="form-inline" action="book/">
+                            <div class="form-group">
+                                <label for="exampleInputName2">书名</label>
+                                <input type="text" id="exampleInputName2" class="form-control" name="name"
+                                       placeholder="请输入书名" value="{{ name }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail2">编号</label>
+                                <input type="text" class="form-control" id="exampleInputEmail2" name="id"
+                                       placeholder="请输入编号" value="{{ id }}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">查询</button>
+                            <a class="btn btn-primary" href="/book/home/">查询全部</a>
+                            <a class="btn btn-primary" href="../book/add">添加图书</a>
+                        </form>
+                        <table class="table table-striped table-bordered">
+                            <tr>
+                                <th>编号</th>
+                                <th>书名</th>
+                                <th>类型</th>
+                                <th>介绍</th>
+                                <th>作者</th>
+                                <th>数量</th>
+                                <th>操作</th>
+                            </tr>
+                            {% for book in books %}
+                            <tr>
+                                <td align="center">{{ forloop.counter }}</td>
+                                <td align="center">{{ book.name }}</td>
+                                <td align="center">{{ book.type }}</td>
+                                <td align="center">{{ book.jiesao }}</td>
+                                <td align="center">{{ book.author }}</td>
+                                <td align="center">{{ book.count }}</td>
+                                <td align="center">
+                                    <a href="../book/edit/?id={{ book.id }}" class="btn btn-warning">
+                                        编辑
+                                    </a>&nbsp;|
+                                    <a onclick="deleteBook( '{{book.id}}')" class="btn btn-danger">
+                                        删除
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function deleteBook(id) {
+            alert("删除成功！！！")
+            document.location.href = `../book/delete/?id=${id}`
+        }
+    </script>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © libo - 图书管理系统
+    </div>
+</div>
+
+</body>
+</html>
